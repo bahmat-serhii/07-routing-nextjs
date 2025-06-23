@@ -36,6 +36,7 @@ export const fetchNotes = async ({
   if (tag && tag !== "All") {
     params.tag = tag;
   }
+
   const response = await axiosInstance.get<FetchNotesResponse>("/notes", {
     params,
   });
@@ -55,12 +56,5 @@ export const deleteNote = async (id: number): Promise<Note> => {
 
 export const fetchNoteById = async (id: number): Promise<Note> => {
   const response = await axiosInstance.get<Note>(`/notes/${id}`);
-  return response.data;
-};
-
-export const getMenu = async (tag: TagWithAll) => {
-  const response = await axiosInstance.get<Note[]>(`/notes`, {
-    params: { tag },
-  });
   return response.data;
 };

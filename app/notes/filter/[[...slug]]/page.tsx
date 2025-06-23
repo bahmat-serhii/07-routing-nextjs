@@ -22,7 +22,7 @@ export default async function NotesPage({ params }: NotesPageProps) {
   const initialSearch = "";
   const validTags: TagWithAll[] = ["All", ...Object.values(Tag)];
 
-  const rawTag = awaitedParams.slug?.[0];
+  const rawTag = awaitedParams.slug?.[0] ?? "All";
   const tag: TagWithAll = validTags.includes(rawTag as TagWithAll)
     ? (rawTag as TagWithAll)
     : "All";

@@ -5,7 +5,6 @@ import {
 } from "@tanstack/react-query";
 import { fetchNoteById } from "../../../lib/api";
 import NoteDetailsClient from "./NoteDetails.client";
-import { redirect } from "next/navigation";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -14,10 +13,6 @@ interface PageProps {
 export default async function Page({ params }: PageProps) {
   const awaitedParams = await params;
   const id = Number(awaitedParams.id);
-
-  if (Number.isNaN(id)) {
-    redirect("/notes/filter");
-  }
 
   const queryClient = new QueryClient();
 
