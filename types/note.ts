@@ -20,3 +20,5 @@ export enum Tag {
   Meeting = "Meeting",
   Shopping = "Shopping",
 }
+
+export type TagWithAll = Tag | "All";

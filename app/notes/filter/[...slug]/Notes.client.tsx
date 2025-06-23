@@ -5,13 +5,13 @@ import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { useDebounce } from "use-debounce";
 
 import css from "./NotesPage.module.css";
-import SearchBox from "../../components/SearchBox/SearchBox";
-import NoteList from "../../components/NoteList/NoteList";
-import NoteModal from "../../components/NoteModal/NoteModal";
-import Pagination from "../../components/Pagination/Pagination";
+import SearchBox from "../../../../components/SearchBox/SearchBox";
+import NoteList from "../../../../components/NoteList/NoteList";
+import NoteModal from "../../../../components/NoteModal/NoteModal";
+import Pagination from "../../../../components/Pagination/Pagination";
 
-import { fetchNotes } from "../../lib/api";
-import type { Note } from "../../types/note";
+import { fetchNotes } from "../../../../lib/api";
+import type { Note, TagWithAll } from "../../../../types/note";
 import ErrorMessage from "./error";
 
 interface NotesResponse {
@@ -23,28 +23,34 @@ interface NotesProps {
   initialPage: number;
   initialSearch: string;
   initialData: NotesResponse;
+  initialTag: TagWithAll;
 }
 
 const Notes: React.FC<NotesProps> = ({
   initialPage,
   initialSearch,
   initialData,
+  initialTag,
 }) => {
   const [searchInput, setSearchInput] = useState<string>(initialSearch);
-
   const [page, setPage] = useState<number>(initialPage);
+
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
 
-  // debounce значення для пошуку
   const [debouncedSearch] = useDebounce(searchInput, 500);
 
   useEffect(() => {
     setPage(1);
-  }, [debouncedSearch]);
+  }, [debouncedSearch, initialTag]); // скидаємо сторінку також при зміні тегу
 
   const { data, isLoading, isError, error } = useQuery<NotesResponse, Error>({
-    queryKey: ["notes", debouncedSearch, page],
-    queryFn: () => fetchNotes({ page, search: debouncedSearch }),
+    queryKey: ["notes", debouncedSearch, page, initialTag],
+    queryFn: () =>
+      fetchNotes({
+        page,
+        search: debouncedSearch,
+        tag: initialTag === "All" ? undefined : initialTag,
+      }),
     placeholderData: keepPreviousData,
     initialData:
       page === initialPage && debouncedSearch === initialSearch

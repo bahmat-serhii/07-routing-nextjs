@@ -1,5 +1,3 @@
-// app/notes/[id]/page.tsx
-
 import {
   QueryClient,
   HydrationBoundary,
@@ -7,14 +5,20 @@ import {
 } from "@tanstack/react-query";
 import { fetchNoteById } from "../../../lib/api";
 import NoteDetailsClient from "./NoteDetails.client";
+import { redirect } from "next/navigation";
 
-export default async function Page({
-  params,
-}: {
+interface PageProps {
   params: Promise<{ id: string }>;
-}) {
+}
+
+export default async function Page({ params }: PageProps) {
   const awaitedParams = await params;
   const id = Number(awaitedParams.id);
+
+  if (Number.isNaN(id)) {
+    redirect("/notes/filter");
+  }
+
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
