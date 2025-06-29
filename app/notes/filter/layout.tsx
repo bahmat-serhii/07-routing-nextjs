@@ -8,7 +8,6 @@ export default function NotesLayout({
 }: {
   children: React.ReactNode;
   sidebar: React.ReactNode;
-  modal: React.ReactNode;
 }) {
   return (
     <section>
