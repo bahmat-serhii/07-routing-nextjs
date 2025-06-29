@@ -2,20 +2,20 @@
 
 import React from "react";
 
-type Props = {
+export default function NotesLayout({
+  children,
+  sidebar,
+  modal,
+}: {
   children: React.ReactNode;
   sidebar: React.ReactNode;
   modal: React.ReactNode;
-};
-
-const NotesLayout = ({ children, sidebar, modal }: Props) => {
+}) {
   return (
     <section>
       <aside>{sidebar}</aside>
-      <div>{children}</div>
+      <main>{children}</main>
       <div>{modal}</div>
     </section>
   );
-};
-
-export default NotesLayout;
+}
