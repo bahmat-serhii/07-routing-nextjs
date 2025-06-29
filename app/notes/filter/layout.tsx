@@ -1,14 +1,16 @@
 // app/notes/filter/layout.tsx
 
-import React from "react";
+import { ReactNode } from "react";
 
-type LayoutProps = {
-  children: React.ReactNode;
-  sidebar: React.ReactNode;
-  modal: React.ReactNode;
-};
-
-const NotesLayout = ({ children, sidebar, modal }: LayoutProps) => {
+export default function NotesLayout({
+  children,
+  sidebar,
+  modal,
+}: {
+  children: ReactNode;
+  sidebar: ReactNode;
+  modal: ReactNode;
+}) {
   return (
     <section>
       <aside>{sidebar}</aside>
@@ -16,6 +18,4 @@ const NotesLayout = ({ children, sidebar, modal }: LayoutProps) => {
       <div>{modal}</div>
     </section>
   );
-};
-
-export default NotesLayout;
+}
