@@ -48,7 +48,7 @@ export default async function NotesPage({ params }: NotesPageProps) {
         initialPage={initialPage}
         initialSearch={initialSearch}
         initialData={initialData}
-        initialTag={tag}
+        tag={tag}
       />
     </HydrationBoundary>
   );
