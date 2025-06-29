@@ -1,15 +1,15 @@
+// components/Modal/Modal.tsx
 import React, { useEffect } from "react";
 import { createPortal } from "react-dom";
-import css from "./NoteModal.module.css";
-import { NoteForm } from "../NoteForm/NoteForm";
+import css from "./Modal.module.css";
 
-interface NoteModalProps {
+interface ModalProps {
   onClose: () => void;
+  children: React.ReactNode;
 }
 
-const NoteModal: React.FC<NoteModalProps> = ({ onClose }) => {
+const Modal: React.FC<ModalProps> = ({ onClose, children }) => {
   useEffect(() => {
-    // Відключаємо прокрутку сторінки при відкритті модалки
     document.body.style.overflow = "hidden";
 
     const handleEsc = (e: KeyboardEvent) => {
@@ -18,7 +18,6 @@ const NoteModal: React.FC<NoteModalProps> = ({ onClose }) => {
     window.addEventListener("keydown", handleEsc);
 
     return () => {
-      // Відновлюємо прокрутку сторінки при закритті модалки
       document.body.style.overflow = "";
       window.removeEventListener("keydown", handleEsc);
     };
@@ -28,7 +27,6 @@ const NoteModal: React.FC<NoteModalProps> = ({ onClose }) => {
     if (e.target === e.currentTarget) onClose();
   };
 
-  // Рендеримо портал безпосередньо в document.body
   return createPortal(
     <div
       className={css.backdrop}
@@ -36,12 +34,10 @@ const NoteModal: React.FC<NoteModalProps> = ({ onClose }) => {
       aria-modal="true"
       onClick={handleBackdropClick}
     >
-      <div className={css.modal}>
-        <NoteForm onClose={onClose} />
-      </div>
+      <div className={css.modal}>{children}</div>
     </div>,
-    document.body
+    document.body,
   );
 };
 
-export default NoteModal;
+export default Modal;

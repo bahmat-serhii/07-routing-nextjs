@@ -22,7 +22,9 @@ const TagsMenu = ({ categories }: Props) => {
           {categories.map((tag) => (
             <li key={tag} className={css.menuItem}>
               <Link
-                href={tag === "All" ? `/notes/filter/` : `/notes/filter/${tag}`}
+                href={
+                  tag === "All" ? `/notes/filter/all` : `/notes/filter/${tag}`
+                }
                 onClick={toggle}
                 className={css.menuLink}
               >

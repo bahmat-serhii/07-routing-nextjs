@@ -7,12 +7,13 @@ import { useDebounce } from "use-debounce";
 import css from "./NotesPage.module.css";
 import SearchBox from "../../../../components/SearchBox/SearchBox";
 import NoteList from "../../../../components/NoteList/NoteList";
-import NoteModal from "../../../../components/NoteModal/NoteModal";
+import Modal from "../../../../components/Modal/Modal";
 import Pagination from "../../../../components/Pagination/Pagination";
 
 import { fetchNotes } from "../../../../lib/api";
 import type { Note, TagWithAll } from "../../../../types/note";
 import ErrorMessage from "./error";
+import { NoteForm } from "../../../../components/NoteForm/NoteForm";
 
 interface NotesResponse {
   notes: Note[];
@@ -97,7 +98,11 @@ const Notes: React.FC<NotesProps> = ({
 
       {data && <NoteList notes={data.notes} />}
 
-      {isModalOpen && <NoteModal onClose={closeModal} />}
+      {isModalOpen && (
+        <Modal onClose={closeModal}>
+          <NoteForm onClose={closeModal} />
+        </Modal>
+      )}
     </div>
   );
 };
