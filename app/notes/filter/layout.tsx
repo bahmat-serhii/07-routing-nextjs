@@ -5,7 +5,6 @@ import React from "react";
 export default function NotesLayout({
   children,
   sidebar,
-  modal,
 }: {
   children: React.ReactNode;
   sidebar: React.ReactNode;
@@ -15,7 +14,6 @@ export default function NotesLayout({
     <section>
       <aside>{sidebar}</aside>
       <main>{children}</main>
-      <div>{modal}</div>
     </section>
   );
 }
