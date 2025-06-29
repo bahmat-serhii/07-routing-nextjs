@@ -25,6 +25,7 @@ export default function NotePreview({ noteId }: Props) {
     queryKey: ["note", noteId],
     queryFn: () => fetchNoteById(noteId),
     enabled: !isNaN(noteId),
+    refetchOnMount: false,
   });
 
   if (isLoading) return <div>Loading...</div>;

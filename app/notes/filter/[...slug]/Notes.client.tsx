@@ -54,7 +54,7 @@ const Notes: React.FC<NotesProps> = ({
       }),
     placeholderData: keepPreviousData,
     initialData:
-      page === initialPage && debouncedSearch === initialSearch && tag === "All"
+      page === initialPage && debouncedSearch === initialSearch
         ? initialData
         : undefined,
     refetchOnMount: false,
@@ -96,7 +96,11 @@ const Notes: React.FC<NotesProps> = ({
       {isLoading && <p className={css.status}>Loading...</p>}
       {isError && error && <ErrorMessage error={error} />}
 
-      {data && <NoteList notes={data.notes} />}
+      {data && data.notes.length > 0 ? (
+        <NoteList notes={data.notes} />
+      ) : (
+        <p className={css.description}>No notes found</p>
+      )}
 
       {isModalOpen && (
         <Modal onClose={closeModal}>
