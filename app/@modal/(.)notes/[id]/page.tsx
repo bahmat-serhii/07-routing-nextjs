@@ -1,39 +1,30 @@
 // app/@modal/(.)notes/[id]/page.tsx
-"use client";
-
-import { use } from "react";
-import { useRouter } from "next/navigation";
-import Modal from "../../../../components/Modal/Modal";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { fetchNoteById, getQueryClient } from "@/lib/api";
 import NotePreview from "./NotePreview.client";
-import { useQuery } from "@tanstack/react-query";
-import { fetchNoteById } from "../../../../lib/api";
 
 type Props = {
   params: Promise<{ id: string }>;
 };
 
-export default function NotePreviewModal({ params }: Props) {
-  const { id } = use(params); // ⬅️ тут використовуємо use() для промісу
-  const router = useRouter();
-
+export default async function NotePreviewModal({ params }: Props) {
+  const { id } = await params;
   const noteId = Number(id);
 
-  const {
-    data: note,
-    isLoading,
-    isError,
-  } = useQuery({
+  if (isNaN(noteId)) return null;
+
+  const queryClient = getQueryClient();
+
+  await queryClient.prefetchQuery({
     queryKey: ["note", noteId],
     queryFn: () => fetchNoteById(noteId),
-    enabled: !isNaN(noteId),
   });
 
-  if (isNaN(noteId) || isError) return null;
-  if (isLoading || !note) return null;
+  const dehydratedState = dehydrate(queryClient);
 
   return (
-    <Modal onClose={() => router.back()}>
-      <NotePreview note={note} />
-    </Modal>
+    <HydrationBoundary state={dehydratedState}>
+      <NotePreview noteId={noteId} />
+    </HydrationBoundary>
   );
 }

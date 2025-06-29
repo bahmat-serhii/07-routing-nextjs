@@ -1,5 +1,5 @@
 import Link from "next/link";
-import css from "./Note-found.module.css";
+import css from "./not-found.module.css";
 
 const NotFound = () => {
   return (

@@ -1,5 +1,6 @@
 import axios from "axios";
 import type { Note, CreateNoteData, TagWithAll } from "../types/note";
+import { QueryClient } from "@tanstack/react-query";
 
 const BASE_URL = "https://notehub-public.goit.study/api";
 const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
@@ -58,3 +59,12 @@ export const fetchNoteById = async (id: number): Promise<Note> => {
   const response = await axiosInstance.get<Note>(`/notes/${id}`);
   return response.data;
 };
+
+let queryClient: QueryClient | null = null;
+
+export function getQueryClient() {
+  if (!queryClient) {
+    queryClient = new QueryClient();
+  }
+  return queryClient;
+}

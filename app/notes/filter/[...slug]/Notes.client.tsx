@@ -24,14 +24,14 @@ interface NotesProps {
   initialPage: number;
   initialSearch: string;
   initialData: NotesResponse;
-  initialTag: TagWithAll;
+  tag: TagWithAll;
 }
 
 const Notes: React.FC<NotesProps> = ({
   initialPage,
   initialSearch,
   initialData,
-  initialTag,
+  tag,
 }) => {
   const [searchInput, setSearchInput] = useState<string>(initialSearch);
   const [page, setPage] = useState<number>(initialPage);
@@ -42,19 +42,19 @@ const Notes: React.FC<NotesProps> = ({
 
   useEffect(() => {
     setPage(1);
-  }, [debouncedSearch, initialTag]); // скидаємо сторінку також при зміні тегу
+  }, [debouncedSearch, tag]); // скидаємо сторінку також при зміні тегу
 
   const { data, isLoading, isError, error } = useQuery<NotesResponse, Error>({
-    queryKey: ["notes", debouncedSearch, page, initialTag],
+    queryKey: ["notes", debouncedSearch, page, tag],
     queryFn: () =>
       fetchNotes({
         page,
         search: debouncedSearch,
-        tag: initialTag === "All" ? undefined : initialTag,
+        tag: tag === "All" ? undefined : tag,
       }),
     placeholderData: keepPreviousData,
     initialData:
-      page === initialPage && debouncedSearch === initialSearch
+      page === initialPage && debouncedSearch === initialSearch && tag === "All"
         ? initialData
         : undefined,
     refetchOnMount: false,
