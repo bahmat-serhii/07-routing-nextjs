@@ -2,13 +2,13 @@
 
 import React from "react";
 
-type Props = {
+type LayoutProps = {
   children: React.ReactNode;
   sidebar: React.ReactNode;
   modal: React.ReactNode;
 };
 
-const NotesLayout = ({ children, sidebar, modal }: Props) => {
+const NotesLayout = ({ children, sidebar, modal }: LayoutProps) => {
   return (
     <section>
       <aside>{sidebar}</aside>
