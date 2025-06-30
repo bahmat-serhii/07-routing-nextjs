@@ -12,16 +12,16 @@ const Header = async () => {
 
   return (
     <header className={css.header}>
-      <Link href="/" aria-label="Home">
-        NoteHub
-      </Link>
+      <Link href="/">NoteHub</Link>
       <nav aria-label="Main Navigation">
         <ul className={css.navigation}>
           <li>
             <TagsMenu categories={["All", ...tags]} />
           </li>
           <li>
-            <Link href="/">Home</Link>
+            <Link href="/" aria-label="Home">
+              Home
+            </Link>
           </li>
         </ul>
       </nav>
